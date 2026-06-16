@@ -55,8 +55,6 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
                 <li key={index}>{item}</li>
               ))}
             </ul>
-
-            <div className="intro-photo" aria-hidden="true" />
           </div>
         </div>
         <RainbowBar />

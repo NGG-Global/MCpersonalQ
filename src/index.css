@@ -341,29 +341,6 @@ p {
   color: #eef0ff;
 }
 
-.intro-photo {
-  margin-top: auto;
-  border-radius: 16px;
-  overflow: hidden;
-  aspect-ratio: 16 / 9;
-  background:
-    radial-gradient(120% 90% at 50% 10%, #cfe1f2 0%, #b9d3ea 35%, #d8c7a8 36%, #e7d4ad 60%, #d9b985 100%);
-  position: relative;
-}
-
-.intro-photo::after {
-  /* צללית "קקטוס" מינימליסטית ברוח תמונת המדבר שבעיצוב */
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(to top, rgba(150, 110, 60, 0.35), transparent 40%),
-    radial-gradient(8px 38px at 50% 70%, #6f8f5a 0 100%, transparent 100%),
-    radial-gradient(6px 16px at 44% 58%, #6f8f5a 0 100%, transparent 100%),
-    radial-gradient(6px 16px at 56% 62%, #6f8f5a 0 100%, transparent 100%);
-  background-repeat: no-repeat;
-}
-
 @media (min-width: 880px) {
   .intro-grid {
     grid-template-columns: 1fr 1fr;

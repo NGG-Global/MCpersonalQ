@@ -74,7 +74,7 @@ export default function QuestionScreen({
               aria-disabled={value === undefined}
             >
               <span className="arrow" aria-hidden="true">
-                ←
+                →
               </span>
               {isLast ? 'הצגת תוצאות' : 'הבא'}
             </button>
@@ -83,7 +83,7 @@ export default function QuestionScreen({
               <button type="button" className="btn btn--ghost" onClick={handleBack}>
                 חזרה
                 <span className="arrow" aria-hidden="true">
-                  →
+                  ←
                 </span>
               </button>
             )}
