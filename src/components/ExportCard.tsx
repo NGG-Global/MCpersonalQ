@@ -197,8 +197,6 @@ const ExportCard = forwardRef<HTMLDivElement, ExportCardProps>(function ExportCa
           </div>
         </div>
       )}
-
-      <div className="export-rainbow" />
     </div>
   );
 });

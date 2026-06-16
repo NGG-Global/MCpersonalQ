@@ -1,9 +1,11 @@
 import { sourceContent } from '../data/questionnaire';
-import RainbowBar from './RainbowBar';
 
 type IntroScreenProps = {
   onStart: () => void;
 };
+
+// בכיוון RTL טבעי: 1 בקצה הימני ו-5 בקצה השמאלי – זהה לסולם שבמסכי השאלות.
+const SCALE = [1, 2, 3, 4, 5];
 
 // כותרת השאלון מודגשת כך ש-"AI" מופיע בצבע ההדגשה, בהתאם לעיצוב.
 function renderTitle() {
@@ -22,27 +24,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
     <div className="shell shell--wide">
       <div className="card">
         <div className="intro-grid">
-          <div className="intro-left">
-            <p className="eyebrow">{sourceContent.introTitle}</p>
-            {sourceContent.introParagraphs.map((paragraph, index) => (
-              <p key={index} className="muted">
-                {paragraph}
-              </p>
-            ))}
-
-            <button
-              type="button"
-              className="btn btn--primary"
-              style={{ marginTop: '10px' }}
-              onClick={onStart}
-            >
-              <span className="arrow" aria-hidden="true">
-                ←
-              </span>
-              התחלת השאלון
-            </button>
-          </div>
-
+          {/* הכותרת מוצגת ראשונה – למעלה במובייל, ובצד ימין בדסקטופ */}
           <div className="intro-right">
             {renderTitle()}
             <p className="subtitle">שאלון רפלקציה עצמית</p>
@@ -56,8 +38,40 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
               ))}
             </ul>
           </div>
+
+          <div className="intro-left">
+            <p className="eyebrow">{sourceContent.introTitle}</p>
+            {sourceContent.introParagraphs.map((paragraph, index) => (
+              <p key={index} className="muted">
+                {paragraph}
+              </p>
+            ))}
+
+            {/* ההסבר על אופן הדירוג מוצג כאן בעמוד הבית */}
+            <div className="intro-scale">
+              <p className="intro-scale__text">{sourceContent.scaleInstruction}</p>
+              <div className="scale-preview" aria-hidden="true">
+                {SCALE.map((number) => (
+                  <div key={number} className="scale-bubble scale-bubble--sm">
+                    {number}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="btn btn--primary"
+              style={{ marginTop: '4px' }}
+              onClick={onStart}
+            >
+              <span className="arrow" aria-hidden="true">
+                ←
+              </span>
+              התחלת השאלון
+            </button>
+          </div>
         </div>
-        <RainbowBar />
       </div>
     </div>
   );

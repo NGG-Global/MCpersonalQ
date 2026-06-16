@@ -13,7 +13,6 @@ import NorthStarRadar from './NorthStarRadar';
 import FeedbackCard from './FeedbackCard';
 import ExportCard from './ExportCard';
 import ExportActions from './ExportActions';
-import RainbowBar from './RainbowBar';
 
 type ResultsScreenProps = {
   scores: Scores;
@@ -56,22 +55,6 @@ export default function ResultsScreen({ scores, onRestart }: ResultsScreenProps)
 
   return (
     <div className="shell">
-      {/* סרגל פעולות עליון */}
-      <div className="card">
-        <div className="card__body results-toolbar">
-          <button type="button" className="btn btn--ghost" onClick={onRestart}>
-            <span className="arrow" aria-hidden="true">
-              ↻
-            </span>
-            מילוי מחדש
-          </button>
-          <div className="actions">
-            <ExportActions onDownloadPdf={handlePdf} onDownloadPng={handlePng} busy={busy} />
-          </div>
-        </div>
-        <RainbowBar />
-      </div>
-
       {/* כרטיס התוצאות הראשי */}
       <div className="card">
         <div className="card__body">
@@ -126,7 +109,6 @@ export default function ResultsScreen({ scores, onRestart }: ResultsScreenProps)
             />
           </div>
         </div>
-        <RainbowBar />
       </div>
 
       {/* כרטיסי ייצוא מחוץ למסך – בגודל קבוע, בלתי תלויים ברוחב המסך */}

@@ -2,11 +2,10 @@ import { useMemo, useState } from 'react';
 import { questions } from './data/questionnaire';
 import { calculateScores, type Answers } from './lib/scoring';
 import IntroScreen from './components/IntroScreen';
-import InstructionsScreen from './components/InstructionsScreen';
 import QuestionScreen from './components/QuestionScreen';
 import ResultsScreen from './components/ResultsScreen';
 
-type Stage = 'intro' | 'instructions' | 'questions' | 'results';
+type Stage = 'intro' | 'questions' | 'results';
 
 export default function App() {
   const [stage, setStage] = useState<Stage>('intro');
@@ -47,11 +46,7 @@ export default function App() {
 
   return (
     <div className="app">
-      {stage === 'intro' && <IntroScreen onStart={() => setStage('instructions')} />}
-
-      {stage === 'instructions' && (
-        <InstructionsScreen onContinue={() => setStage('questions')} />
-      )}
+      {stage === 'intro' && <IntroScreen onStart={() => setStage('questions')} />}
 
       {stage === 'questions' && (
         <QuestionScreen

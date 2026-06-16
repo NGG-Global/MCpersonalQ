@@ -3,7 +3,6 @@ import { questions } from '../data/questionnaire';
 import type { Answers } from '../lib/scoring';
 import ProgressBar from './ProgressBar';
 import RatingScale from './RatingScale';
-import RainbowBar from './RainbowBar';
 
 type QuestionScreenProps = {
   index: number; // 0-based
@@ -89,7 +88,6 @@ export default function QuestionScreen({
             </button>
           </div>
         </div>
-        <RainbowBar />
       </div>
     </div>
   );
