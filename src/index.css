@@ -1,0 +1,852 @@
+/* גופן Heebo מתארח מקומית – ללא תלות חיצונית, ומאפשר הטמעה תקינה בייצוא PNG/PDF.
+   קבצים אלו הם גופנים משתנים (variable) המכסים את כל טווח המשקלים. */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('./fonts/heebo-hebrew.woff2') format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('./fonts/heebo-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+/* ===========================================================================
+   שפה עיצובית – מבוססת על קובץ העיצוב (Claude Design)
+   רקע לבנדר בהיר מאוד, כרטיסים לבנים, כחול נייבי כצבע מוביל,
+   ורוד/מג'נטה כצבע הדגשה, ופס "קשת" צבעוני לתחתית הכרטיסים.
+   =========================================================================== */
+
+:root {
+  --bg: #e9e7f1;
+  --bg-soft: #f1eff7;
+  --card: #ffffff;
+  --card-soft: #fbfaff;
+
+  --navy: #23308c;
+  --navy-deep: #1b2570;
+  --navy-700: #2c3a9e;
+  --pink: #cf3f7d;
+  --pink-soft: #fbe9f1;
+  --pink-badge: #f7dfeb;
+
+  --text: #1f2453;
+  --text-muted: #5b6079;
+  --text-faint: #8a8fa8;
+
+  --line: #e7e6ef;
+  --track: #e9e8f0;
+
+  --radius-lg: 28px;
+  --radius-md: 20px;
+  --radius-sm: 14px;
+
+  --shadow-card: 0 18px 50px -28px rgba(31, 36, 83, 0.45);
+  --shadow-soft: 0 10px 30px -22px rgba(31, 36, 83, 0.4);
+
+  --maxw: 760px;
+
+  /* פס הקשת – שישה צבעים, מותאם לכיוון העיצוב */
+  --rainbow: linear-gradient(
+    90deg,
+    #cf4f86 0 16.66%,
+    #ee6f72 16.66% 33.33%,
+    #f0b878 33.33% 50%,
+    #8cc06a 50% 66.66%,
+    #56c6e0 66.66% 83.33%,
+    #6b6ee6 83.33% 100%
+  );
+
+  --font: 'Heebo', 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  direction: rtl;
+}
+
+body {
+  direction: rtl;
+  text-align: right;
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.6;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* פוקוס נגיש וברור */
+:focus-visible {
+  outline: 3px solid var(--navy);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ----------------------- מבנה כללי / פריסה ----------------------- */
+
+.app {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(16px, 4vw, 48px) clamp(14px, 4vw, 32px) 64px;
+}
+
+.shell {
+  width: 100%;
+  max-width: var(--maxw);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.shell--wide {
+  max-width: 980px;
+}
+
+/* כרטיס בסיסי עם פס קשת בתחתית */
+.card {
+  position: relative;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.card__body {
+  padding: clamp(22px, 4vw, 40px);
+}
+
+.rainbow-bar {
+  height: 10px;
+  width: 100%;
+  background: var(--rainbow);
+}
+
+.rainbow-bar--rounded {
+  border-radius: 999px;
+  height: 6px;
+}
+
+/* ----------------------- טיפוגרפיה ----------------------- */
+
+.eyebrow {
+  color: var(--pink);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  margin: 0 0 10px;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--text);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.title-xl {
+  font-size: clamp(1.9rem, 5vw, 2.7rem);
+  font-weight: 800;
+}
+
+.title-lg {
+  font-size: clamp(1.4rem, 3.4vw, 1.9rem);
+  font-weight: 800;
+}
+
+.section-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0 0 14px;
+}
+
+.accent-ai {
+  color: var(--pink);
+}
+
+p {
+  margin: 0 0 14px;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+/* ----------------------- כפתורים ----------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1.02rem;
+  padding: 14px 30px;
+  min-height: 52px;
+  transition: transform 0.12s ease, box-shadow 0.18s ease, background 0.18s ease,
+    color 0.18s ease, opacity 0.18s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--primary {
+  background: var(--navy);
+  color: #fff;
+  box-shadow: 0 14px 26px -14px rgba(35, 48, 140, 0.85);
+}
+
+.btn--primary:hover {
+  background: var(--navy-deep);
+}
+
+.btn--primary:disabled {
+  background: #c7c9da;
+  color: #f3f3f8;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* מצב "נעול": הכפתור נראה לא-פעיל עד לבחירת דירוג, אך נשאר לחיץ כדי להציג
+   את הודעת הוולידציה ("כדי להמשיך, יש לבחור דירוג."). */
+.btn--primary.btn--locked {
+  background: #c7c9da;
+  color: #f6f6fa;
+  box-shadow: none;
+}
+
+.btn--primary.btn--locked:hover {
+  background: #bcbed1;
+}
+
+.btn--outline {
+  background: #fff;
+  color: var(--navy);
+  border: 1.5px solid var(--navy);
+}
+
+.btn--outline:hover {
+  background: var(--bg-soft);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--navy);
+  font-weight: 700;
+  padding: 12px 14px;
+  min-height: 44px;
+}
+
+.btn--ghost:hover {
+  color: var(--navy-deep);
+  text-decoration: underline;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.arrow {
+  display: inline-block;
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+/* ----------------------- רשימת "חשוב לדעת" ----------------------- */
+
+.important {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.important li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ----------------------- מסך פתיחה (שתי עמודות בדסקטופ) ----------------------- */
+
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.intro-left {
+  padding: clamp(22px, 4vw, 40px);
+}
+
+.intro-right {
+  position: relative;
+  background: linear-gradient(160deg, #2a3aa0 0%, #20296f 60%, #1a2160 100%);
+  color: #fff;
+  padding: clamp(24px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.intro-right .eyebrow {
+  color: #aeb4ec;
+}
+
+.intro-right h1 {
+  color: #fff;
+}
+
+.intro-right .subtitle {
+  color: #cfd4f5;
+  font-weight: 600;
+  margin: 0;
+}
+
+.intro-right .important li {
+  color: #eef0ff;
+}
+
+.intro-photo {
+  margin-top: auto;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background:
+    radial-gradient(120% 90% at 50% 10%, #cfe1f2 0%, #b9d3ea 35%, #d8c7a8 36%, #e7d4ad 60%, #d9b985 100%);
+  position: relative;
+}
+
+.intro-photo::after {
+  /* צללית "קקטוס" מינימליסטית ברוח תמונת המדבר שבעיצוב */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to top, rgba(150, 110, 60, 0.35), transparent 40%),
+    radial-gradient(8px 38px at 50% 70%, #6f8f5a 0 100%, transparent 100%),
+    radial-gradient(6px 16px at 44% 58%, #6f8f5a 0 100%, transparent 100%),
+    radial-gradient(6px 16px at 56% 62%, #6f8f5a 0 100%, transparent 100%);
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 880px) {
+  .intro-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ----------------------- מסך הנחיות ----------------------- */
+
+.instructions-card {
+  text-align: center;
+}
+
+.instructions-text {
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+  font-weight: 500;
+  color: var(--text);
+  max-width: 640px;
+  margin: 0 auto 28px;
+}
+
+.scale-preview {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.scale-bubble {
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  border: 2px solid var(--navy);
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.15rem;
+  background: #fff;
+}
+
+.scale-line {
+  max-width: 420px;
+  margin: 0 auto 26px;
+}
+
+/* ----------------------- פס התקדמות ----------------------- */
+
+.progress-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+.progress-head .pct {
+  color: var(--navy);
+  font-weight: 800;
+}
+
+.progress-head .count {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.progress-track {
+  height: 9px;
+  border-radius: 999px;
+  background: var(--track);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--navy);
+  transition: width 0.35s ease;
+}
+
+/* ----------------------- מסך שאלה ----------------------- */
+
+.question-card {
+  background: var(--card-soft);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  padding: clamp(26px, 4vw, 44px) clamp(20px, 4vw, 40px);
+  text-align: center;
+}
+
+.question-text {
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.45;
+  margin: 0 auto 30px;
+  max-width: 560px;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  gap: clamp(10px, 2.5vw, 18px);
+  /* כיוון RTL טבעי: 1 בקצה הימני ו-5 בקצה השמאלי, בהתאם לעיצוב */
+}
+
+.rating-btn {
+  width: clamp(52px, 13vw, 64px);
+  height: clamp(52px, 13vw, 64px);
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 999px;
+  border: 2px solid var(--navy);
+  background: #fff;
+  color: var(--navy);
+  font-weight: 800;
+  font-size: 1.2rem;
+  transition: transform 0.12s ease, box-shadow 0.18s ease, background 0.18s ease,
+    color 0.18s ease, border-color 0.18s ease;
+}
+
+.rating-btn:hover {
+  background: var(--bg-soft);
+}
+
+.rating-btn[aria-pressed='true'] {
+  background: var(--pink);
+  border-color: var(--pink);
+  color: #fff;
+  box-shadow: 0 12px 22px -10px rgba(207, 63, 125, 0.8);
+  transform: translateY(-2px);
+}
+
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 26px;
+  gap: 12px;
+}
+
+.validation {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--pink-soft);
+  color: var(--pink);
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 10px 16px;
+  margin-top: 18px;
+  font-size: 0.95rem;
+}
+
+/* ----------------------- מסך תוצאות ----------------------- */
+
+.results-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.results-toolbar .actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.score-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 8px 0 4px;
+}
+
+@media (min-width: 620px) {
+  .score-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.score-card {
+  border-radius: var(--radius-md);
+  padding: 22px 24px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 120px;
+  justify-content: center;
+}
+
+.score-card--tech {
+  background: linear-gradient(150deg, #2a3aa0, #20296f);
+}
+
+.score-card--human {
+  background: linear-gradient(150deg, #d2477f, #b63a70);
+}
+
+.score-card .label {
+  font-weight: 700;
+  opacity: 0.92;
+  font-size: 1.02rem;
+}
+
+.score-card .value {
+  font-size: 2.6rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.score-card .value sup {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-inline-end: 2px;
+}
+
+.score-card .bar-track {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.28);
+  overflow: hidden;
+}
+
+.score-card .bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* כוכב הצפון – עמודות אופקיות */
+.northstar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ns-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.ns-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--text);
+  min-width: 116px;
+  justify-content: flex-start;
+}
+
+.ns-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  flex: 0 0 auto;
+}
+
+.ns-track {
+  height: 12px;
+  border-radius: 999px;
+  background: var(--track);
+  overflow: hidden;
+}
+
+.ns-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.ns-pct {
+  font-weight: 800;
+  color: var(--text);
+  min-width: 46px;
+  text-align: left;
+}
+
+/* גרף רדאר (דסקטופ) */
+.radar-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 6px 0 10px;
+}
+
+/* הרדאר מוצג בדסקטופ בלבד; העמודות האופקיות הן צורת ההצגה הראשית בכל מסך */
+.radar-desktop-only {
+  display: none;
+}
+
+@media (min-width: 760px) {
+  .radar-desktop-only {
+    display: block;
+  }
+}
+
+/* כרטיסי משוב */
+.feedback-card {
+  border-radius: var(--radius-md);
+  background: var(--card-soft);
+  padding: 22px 24px;
+  border-inline-start: 5px solid var(--navy);
+  box-shadow: var(--shadow-soft);
+}
+
+.feedback-card--human {
+  border-inline-start-color: var(--pink);
+}
+
+.feedback-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.feedback-head h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.feedback-card--human .feedback-head h3 {
+  color: var(--pink);
+}
+
+.feedback-badge {
+  background: var(--pink-badge);
+  color: var(--pink);
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 5px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.feedback-card--tech .feedback-badge {
+  background: #e6e9fb;
+  color: var(--navy);
+}
+
+.feedback-text {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.results-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.results-footer .restart {
+  margin-inline-end: auto;
+}
+
+/* ----------------------- כרטיס ייצוא (מחוץ למסך) ----------------------- */
+
+.export-stage {
+  position: fixed;
+  inset-inline-start: -10000px;
+  top: 0;
+  pointer-events: none;
+  opacity: 1;
+  z-index: -1;
+}
+
+.export-card {
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+}
+
+.export-card--png {
+  width: 1080px;
+  height: 1350px;
+  padding: 72px 72px 0;
+}
+
+.export-card--pdf {
+  width: 800px;
+  padding: 56px 56px 0;
+}
+
+.export-rainbow {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 14px;
+  background: var(--rainbow);
+}
+
+.export-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.export-meta {
+  text-align: left;
+  color: var(--text-faint);
+  font-weight: 700;
+}
+
+.export-card--png .export-title {
+  font-size: 56px;
+  font-weight: 900;
+}
+
+.export-card--pdf .export-title {
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.export-card--png .eyebrow {
+  font-size: 26px;
+}
+
+.export-card--pdf .eyebrow {
+  font-size: 18px;
+}
+
+.export-scores {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 36px 0;
+}
+
+.export-card--pdf .export-scores {
+  gap: 18px;
+  margin: 26px 0;
+}
+
+.export-section-title {
+  font-weight: 900;
+  color: var(--navy);
+}
+
+.export-card--png .export-section-title {
+  font-size: 30px;
+  margin-bottom: 22px;
+}
+
+.export-card--pdf .export-section-title {
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+.export-feedback {
+  margin-top: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-bottom: 40px;
+}
+
+.export-footer-note {
+  margin-top: auto;
+  padding: 22px 0 40px;
+  color: var(--text-faint);
+  font-weight: 700;
+  font-size: 18px;
+}
+
+@media (max-width: 560px) {
+  .nav-row .btn--ghost {
+    padding-inline: 8px;
+  }
+}
