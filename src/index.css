@@ -481,6 +481,11 @@ p {
   gap: 12px;
 }
 
+/* "הבא" תמיד בצד שמאל ו"חזרה" בצד ימין – גם בשאלה הראשונה שבה אין כפתור "חזרה". */
+.nav-next {
+  margin-inline-start: auto;
+}
+
 .validation {
   display: flex;
   align-items: center;

@@ -67,26 +67,26 @@ export default function QuestionScreen({
           )}
 
           <div className="nav-row">
-            <button
-              type="button"
-              className={`btn btn--primary${value === undefined ? ' btn--locked' : ''}`}
-              onClick={handleNext}
-              aria-disabled={value === undefined}
-            >
-              <span className="arrow" aria-hidden="true">
-                →
-              </span>
-              {isLast ? 'הצגת תוצאות' : 'הבא'}
-            </button>
-
             {!isFirst && (
               <button type="button" className="btn btn--ghost" onClick={handleBack}>
                 חזרה
                 <span className="arrow" aria-hidden="true">
-                  ←
+                  →
                 </span>
               </button>
             )}
+
+            <button
+              type="button"
+              className={`btn btn--primary nav-next${value === undefined ? ' btn--locked' : ''}`}
+              onClick={handleNext}
+              aria-disabled={value === undefined}
+            >
+              <span className="arrow" aria-hidden="true">
+                ←
+              </span>
+              {isLast ? 'הצגת תוצאות' : 'הבא'}
+            </button>
           </div>
         </div>
         <RainbowBar />
