@@ -27,6 +27,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # מפעיל את GitHub Pages ומעביר אותו למצב בנייה "GitHub Actions".
+      # enablement: true מבטיח שהאתר מוגדר ל-build_type=workflow, כך
+      # שצעד הפריסה (deploy-pages) לא ייכשל עם שגיאת 404.
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
